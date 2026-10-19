@@ -1,5 +1,12 @@
 .wrapper {
   display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.row {
+  display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
 }
@@ -41,4 +48,20 @@
   font-weight: 500;
   color: var(--neutral-700);
   cursor: pointer;
+}
+
+.addon {
+  margin-left: -4px; /* "Acepto los términos…" se lee como una sola frase */
+  font-size: 14px;
+}
+
+.invalid {
+  border-color: var(--danger-600);
+}
+
+.error {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--danger-600);
 }

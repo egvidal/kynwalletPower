@@ -22,13 +22,13 @@ export function isValidPasswordLength(password: string): boolean {
   return password.length >= PASSWORD_MIN_LENGTH && password.length <= PASSWORD_MAX_LENGTH;
 }
 
-function validateEmail(email: string): string | undefined {
+export function validateEmail(email: string): string | undefined {
   if (normalizeEmail(email) === '') return MESSAGES.EMAIL_REQUIRED;
   if (!isValidEmail(email)) return MESSAGES.EMAIL_INVALID;
   return undefined;
 }
 
-function validatePassword(password: string): string | undefined {
+export function validatePassword(password: string): string | undefined {
   // La contraseña se valida sin recortar (FR-004).
   if (password === '') return MESSAGES.PASSWORD_REQUIRED;
   if (password.length < PASSWORD_MIN_LENGTH) return MESSAGES.PASSWORD_TOO_SHORT;

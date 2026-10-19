@@ -6,3 +6,5 @@ specs
 .specify
 .claude
 package-lock.json
+test-results
+playwright-report

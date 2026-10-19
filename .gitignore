@@ -3,6 +3,8 @@ node_modules/
 dist/
 build/
 coverage/
+test-results/
+playwright-report/
 *.log
 
 # Variables de entorno locales (Constitución 5.3)

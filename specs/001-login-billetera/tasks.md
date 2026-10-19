@@ -206,6 +206,14 @@ del código, y verlas fallar. Cada historia empieza por sus pruebas.
 
 ---
 
+## Phase 9: Follow-up — Registro de eventos (detectado en `/speckit-analyze` de 002, 2026-10-19)
+
+**Purpose**: Corregir el incumplimiento de la Constitución 5.5 y 8.7: el login no registra los intentos de autenticación. Depende del puerto `Logger` y del adaptador `ConsoleJsonLogger` creados en `specs/002-registro-billetera/tasks.md` (T010, T013); ver `specs/002-registro-billetera/research.md` R14.
+
+- [X] T073 Registrar los intentos de inicio de sesión como eventos estructurados, con TDD: (1) primero ampliar `src/application/authenticate.test.ts` con un logger espía (`src/test/loggerSpy.ts`) y verificar exactamente un evento por intento con el mismo `attemptId`: `info` `auth.succeeded` con `durationMs`; `info` `auth.rejected` con `reason: 'invalid-credentials'`; `error` `auth.failed` con `durationMs` y `errorName` cuando el gateway rechaza, o con `reason: 'unavailable'` cuando responde `unavailable` (no hay excepción de la que tomar el nombre); y que ningún evento serializado contenga el correo, la contraseña ni el `message` del error; (2) después cambiar `createAuthenticate` en `src/application/authenticate.ts` a `createAuthenticate({ gateway, logger, newAttemptId?, now? })` siguiendo el patrón de `createRegister`, y actualizar la composición en `src/main.tsx` (`logger: new ConsoleJsonLogger()`) y los usos en las pruebas; (3) `npm run verify` en verde
+
+---
+
 ## Dependencies & Execution Order
 
 ### Phase Dependencies

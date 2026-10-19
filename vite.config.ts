@@ -9,6 +9,8 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
+    // Las pruebas de navegador (e2e/) las ejecuta Playwright.
+    include: ['src/**/*.test.{ts,tsx}'],
     globals: true,
     setupFiles: ['src/test/setup.ts'],
     css: { modules: { classNameStrategy: 'non-scoped' } },

@@ -4,9 +4,9 @@ import { createAuthStub } from '@/test/authStub';
 import { TEST_ACCOUNT } from '@/test/fixtures';
 import { LoginForm } from './LoginForm';
 
-function setup(stub = createAuthStub()) {
+function setup(stub = createAuthStub(), onNavigateRegister = vi.fn()) {
   const user = userEvent.setup();
-  render(<LoginForm authenticate={stub.authenticate} />);
+  render(<LoginForm authenticate={stub.authenticate} onNavigateRegister={onNavigateRegister} />);
   const email = screen.getByLabelText('Correo electrónico');
   const password = screen.getByLabelText('Contraseña');
   const submit = () => user.click(screen.getByRole('button', { name: 'Iniciar sesión' }));
@@ -179,7 +179,7 @@ describe('LoginForm · US3 Validar los campos antes de enviar', () => {
 });
 
 describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
-  it.each(['¿Olvidaste tu contraseña?', 'Google', 'Apple', 'Regístrate'])(
+  it.each(['¿Olvidaste tu contraseña?', 'Google', 'Apple'])(
     'US5-1: "%s" muestra el aviso y conserva los datos',
     async (name) => {
       const { user, stub, email, password } = setup();
@@ -194,6 +194,15 @@ describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
       expect(stub.authenticate).not.toHaveBeenCalled();
     },
   );
+
+  it('US4-2 (002): "Regístrate" llama a onNavigateRegister sin autenticar', async () => {
+    const onNavigateRegister = vi.fn();
+    const { user, stub } = setup(createAuthStub(), onNavigateRegister);
+    await user.click(screen.getByRole('button', { name: 'Regístrate' }));
+    expect(onNavigateRegister).toHaveBeenCalledOnce();
+    expect(stub.authenticate).not.toHaveBeenCalled();
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  });
 
   it('US5-2: "Recordarme" cambia de estado sin escribir en el almacenamiento', async () => {
     const setItem = vi.spyOn(Storage.prototype, 'setItem');
@@ -260,5 +269,23 @@ describe('LoginForm · seguridad (FR-012)', () => {
 
     setItem.mockRestore();
     consoleSpies.forEach((spy) => spy.mockRestore());
+  });
+});
+
+describe('LoginForm · aviso de registro exitoso (002, FR-012)', () => {
+  it('con successNotice muestra un status con ese texto', () => {
+    render(
+      <LoginForm
+        authenticate={createAuthStub().authenticate}
+        onNavigateRegister={vi.fn()}
+        successNotice="Cuenta creada"
+      />,
+    );
+    expect(screen.getByRole('status')).toHaveTextContent('Cuenta creada');
+  });
+
+  it('sin successNotice no hay aviso', () => {
+    setup();
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
   });
 });

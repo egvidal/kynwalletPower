@@ -17,6 +17,10 @@
   color: var(--neutral-900);
 }
 
+.title:focus {
+  outline: none;
+}
+
 .subtitle {
   margin: 0;
   font-size: 16px;

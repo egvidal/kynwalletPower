@@ -20,7 +20,8 @@
     "audit:deps": "npm audit --audit-level=high",
     "audit:licenses": "license-checker-rseidelsohn --production --onlyAllow \"MIT;ISC;BSD-2-Clause;BSD-3-Clause;Apache-2.0;0BSD;OFL-1.1;CC0-1.0;BlueOak-1.0.0\" --excludePackages kynwallet-login@0.1.0",
     "scan:secrets": "secretlint \"**/*\"",
-    "verify": "npm run lint && npm run format && npm run typecheck && npm run test:coverage && npm run build && npm run audit:deps && npm run audit:licenses && npm run scan:secrets"
+    "verify": "npm run lint && npm run format && npm run typecheck && npm run test:coverage && npm run test:e2e && npm run build && npm run audit:deps && npm run audit:licenses && npm run scan:secrets",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
+    "@playwright/test": "1.64.1",
     "@secretlint/secretlint-rule-preset-recommend": "^13.0.7",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^7.0.1",

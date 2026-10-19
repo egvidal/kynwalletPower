@@ -1,0 +1,56 @@
+/* Espaciado del frame 04 · Registro (research.md R2): 16px entre elementos y ajustes puntuales. */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 5px; /* 21px hasta el primer campo */
+}
+
+.title {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--neutral-900);
+}
+
+.title:focus {
+  outline: none;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 16px;
+  color: var(--neutral-600);
+}
+
+.terms {
+  margin-top: 2px; /* 18px desde el último campo */
+}
+
+.divider {
+  margin-top: 4px; /* 20px desde el botón */
+}
+
+.social {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 6px; /* 22px desde el separador */
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 4px 0 0; /* 20px desde los botones sociales */
+  font-size: 14px;
+  color: var(--neutral-600);
+}

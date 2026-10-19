@@ -9,7 +9,18 @@ const layer = (patterns, message) => ({
 });
 
 export default tseslint.config(
-  { ignores: ['dist', 'coverage', 'node_modules', '.specify', '.claude', 'specs'] },
+  {
+    ignores: [
+      'dist',
+      'coverage',
+      'node_modules',
+      '.specify',
+      '.claude',
+      'specs',
+      'test-results',
+      'playwright-report',
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.strict,
   {
@@ -21,6 +32,11 @@ export default tseslint.config(
       ...jsxA11y.flatConfigs.recommended.rules,
       'no-console': 'error',
     },
+  },
+  // Único adaptador autorizado a escribir en la consola (research.md R14)
+  {
+    files: ['src/infrastructure/ConsoleJsonLogger.ts'],
+    rules: { 'no-console': 'off' },
   },
   // Regla de dependencias de Clean Architecture (Constitución 3.2, 3.5)
   {

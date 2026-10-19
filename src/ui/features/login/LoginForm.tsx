@@ -14,9 +14,12 @@ import styles from './LoginForm.module.css';
 
 type LoginFormProps = {
   authenticate: Authenticate;
+  onNavigateRegister: () => void;
+  /** Aviso de un solo uso al llegar desde un registro exitoso (002, FR-012). */
+  successNotice?: string;
 };
 
-export function LoginForm({ authenticate }: LoginFormProps) {
+export function LoginForm({ authenticate, onNavigateRegister, successNotice }: LoginFormProps) {
   const { state, change, blur, submit, logout, toggleRemember, showNotice } =
     useLoginForm(authenticate);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -44,8 +47,12 @@ export function LoginForm({ authenticate }: LoginFormProps) {
 
   return (
     <form className={styles.form} noValidate onSubmit={handleSubmit}>
+      {successNotice && <Alert tone="info">{successNotice}</Alert>}
+
       <div className={styles.heading}>
-        <h1 className={styles.title}>Bienvenido de nuevo</h1>
+        <h1 className={styles.title} tabIndex={-1}>
+          Bienvenido de nuevo
+        </h1>
         <p className={styles.subtitle}>Ingresa a tu cuenta para continuar</p>
       </div>
 
@@ -108,7 +115,7 @@ export function LoginForm({ authenticate }: LoginFormProps) {
 
       <p className={styles.footer}>
         ¿No tienes cuenta?
-        <Button variant="link" onClick={notAvailable}>
+        <Button variant="link" onClick={onNavigateRegister}>
           Regístrate
         </Button>
       </p>
